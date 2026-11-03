@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111827">
+<title>AniSidd Safety</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar"><a class="brand" href="#home"><span class="brand-mark">✦</span><span>AniSidd <small>SAFETY NETWORK</small></span></a><span id="connection-pill" class="pill">Secure setup</span></header>
+  <main>
+    <section id="auth-view" class="view auth-layout">
+      <div class="hero-copy"><span class="eyebrow">SAFETY, WITH YOU</span><h1>Your safety.<br><em>Your people.</em><br>Your control.</h1><p>A calm, quick way to reach your trusted people when you need help.</p><div class="trust-row"><span>🔒 Private by design</span><span>📍 Location only with permission</span></div></div>
+      <div class="panel auth-panel"><div class="switcher"><button class="switch active" data-auth-mode="login">Log in</button><button class="switch" data-auth-mode="signup">Create account</button></div>
+        <p class="muted" id="auth-copy">Enter your mobile number. We’ll check whether you already have an account.</p>
+        <form id="phone-form"><label for="phone">Mobile number</label><div class="phone-input"><span>+91</span><input id="phone" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit number" required pattern="[0-9]{10}"></div><label class="checkline"><input id="privacy-consent" type="checkbox" required> I agree to use location and emergency features only with appropriate permission.</label><button class="btn primary full" type="submit">Continue securely <span>→</span></button></form>
+        <form id="otp-form" class="hidden"><p class="otp-note">A 5-digit verification code has been requested for <b id="otp-number"></b>. Check your SMS.</p><label for="otp">5-digit OTP</label><input id="otp" class="text-input otp-input" type="text" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" placeholder="· · · · ·" required><button class="btn primary full" type="submit">Verify & continue →</button><button class="btn ghost full" id="resend-otp" type="button">Resend code</button></form>
+        <p id="auth-message" class="message" role="status"></p><p class="tiny">SMS delivery requires the server to be configured with a real verification provider. No demo OTP is displayed.</p>
+      </div>
+    </section>
+    <section id="setup-view" class="view hidden">
+      <div class="section-heading"><span class="eyebrow">LET’S GET READY</span><h2>Build your safety circle</h2><p>Add as many trusted contacts as you need. You can import contacts on supported browsers or add them manually.</p></div>
+      <div class="panel"><form id="profile-form"><label for="full-name">Your full name</label><input class="text-input" id="full-name" required placeholder="Full name"><label for="email">Email (optional)</label><input class="text-input" id="email" type="email" placeholder="you@example.com"></form>
+        <div class="subhead"><h3>Trusted contacts</h3><button id="import-contacts" class="btn ghost small" type="button">Import contacts</button></div>
+        <form id="contact-form" class="contact-add"><input class="text-input" id="contact-name" required placeholder="Contact name"><input class="text-input" id="contact-phone" required inputmode="tel" placeholder="Mobile number"><button class="btn secondary" type="submit">Add contact +</button></form><div id="contacts-list" class="contact-list"><p class="muted">No contacts added yet.</p></div>
+        <label class="checkline"><input id="contact-consent" type="checkbox"> I have permission to share emergency alerts with these contacts.</label><button id="finish-setup" class="btn primary full">Save and open dashboard →</button><p id="setup-message" class="message"></p>
+      </div>
+    </section>
+    <section id="dashboard-view" class="view hidden">
+      <div class="welcome-row"><div><span class="eyebrow">YOUR SAFETY SPACE</span><h2 id="welcome">You’re not alone.</h2><p class="muted">Your trusted circle is one tap away.</p></div><button id="profile-avatar" class="avatar" aria-label="Open profile">A</button></div>
+      <div class="sos-card"><div class="sos-caption"><span class="live-dot"></span> EMERGENCY ASSISTANCE <span class="quiet-tag">VIBRATION ONLY</span></div><div class="sos-wrap"><div class="sos-halo"></div><button id="sos-button" class="sos-button" aria-label="Trigger SOS"><span class="sos-icon">!</span><strong>SOS</strong><small>PRESS FOR HELP</small></button></div><p class="sos-help">Tap only when you need help. Your phone may vibrate; no sound is played by this app.</p><div id="sos-status" class="sos-status" role="status">Ready when you need us.</div></div>
+      <div class="location-card panel"><div class="section-line"><div><span class="eyebrow">DEVICE LOCATION</span><h3 id="location-title">Location not shared</h3></div><button id="refresh-location" class="icon-btn" aria-label="Refresh location">↻</button></div><p id="location-detail" class="muted">Allow location access to show your current position here.</p><div id="map"></div><div class="map-legend"><span>📍 Your device</span><span>⭐ Nearby police station</span></div><a id="maps-link" class="map-link hidden" target="_blank" rel="noopener">Open location in Google Maps ↗</a><p class="tiny">Location is requested with browser permission. Continuous background tracking is not guaranteed when the page is closed.</p></div>
+      <div class="quick-grid"><button class="quick-card" data-page="contacts"><span>♧</span><b>Safety circle</b><small id="contact-count">0 trusted contacts</small></button><button class="quick-card" data-page="history"><span>◷</span><b>Alert history</b><small>Review SOS events</small></button><button class="quick-card" data-page="profile"><span>◉</span><b>My profile</b><small>Account and preferences</small></button><button class="quick-card" data-page="privacy"><span>⌑</span><b>Privacy & access</b><small>Permissions and data</small></button></div>
+    </section>
+    <section id="page-view" class="view hidden"><button id="back-home" class="back-link">← Back to dashboard</button><div id="page-content"></div></section>
+  </main>
+  <nav id="bottom-nav" class="bottom-nav hidden"><button data-page="home" class="nav-item active"><span>⌂</span>Home</button><button data-page="contacts" class="nav-item"><span>♧</span>Contacts</button><button data-page="history" class="nav-item"><span>◷</span>History</button><button data-page="profile" class="nav-item"><span>◉</span>Profile</button></nav>
+  <footer class="footer">ANI SIDD SAFETY NETWORK <span>•</span> Be safe. Stay connected.</footer>
+</div>
+<div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><div class="modal-card"><div class="modal-symbol">!</div><h3 id="confirm-title">Activate emergency SOS?</h3><p>This will send an alert to your saved contacts if the backend and SMS provider are configured. This app does not automatically dispatch police.</p><div class="modal-actions"><button id="cancel-sos" class="btn ghost">Cancel</button><button id="confirm-sos" class="btn danger">Confirm SOS</button></div></div></div>
+<div id="toast" class="toast" role="status"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script><script>window.API_BASE = window.API_BASE || "http://localhost:8080";</script><script src="app.js"></script>
+</body></html>
